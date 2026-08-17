@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, Compass, Rocket, BarChart } from "lucide-react";
+import { Search, Compass, Rocket, BarChart, Sparkles } from "lucide-react";
 
 export default function Process() {
   const steps = [
@@ -34,18 +34,17 @@ export default function Process() {
   ];
 
   return (
-    <section id="process" className="relative py-24 bg-slate-950/80 border-t border-white/5">
+    <section id="process" className="relative py-24 bg-black border-t border-white/5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-950/40 px-4 py-1 text-xs font-semibold text-indigo-400 mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-zinc-900 px-4 py-1 text-xs font-semibold text-amber-400 mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Our Proven Blueprint</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             How We Scale Your Brand In{" "}
-            <span className="bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">
-              4 Simple Steps
-            </span>
+            <span className="text-amber-500">4 Simple Steps</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-400">
             A frictionless, battle-tested agency framework designed for rapid deployment and maximum ROAS.
@@ -59,22 +58,26 @@ export default function Process() {
             return (
               <div
                 key={step.num}
-                className="relative rounded-2xl border border-white/10 bg-slate-900/60 p-6 backdrop-blur-xl hover:border-indigo-500/40 transition-all duration-300 flex flex-col justify-between"
+                className="group relative rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 hover:bg-white hover:border-white shadow-sm transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-3xl font-black text-slate-700">{step.num}</span>
-                    <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-950 border border-indigo-500/30 text-indigo-400">
+                    <span className="text-3xl font-black text-zinc-600 group-hover:text-amber-600 transition-colors duration-300">
+                      {step.num}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-zinc-900 border border-zinc-800 text-white group-hover:bg-amber-500 group-hover:text-black group-hover:border-amber-500 transition-colors duration-300">
                       {step.timeframe}
                     </span>
                   </div>
 
-                  <div className="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-indigo-400" />
+                  <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-4 group-hover:bg-black group-hover:border-black group-hover:scale-110 transition-all duration-300">
+                    <Icon className="w-6 h-6 text-white" />
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  <h3 className="text-xl font-bold text-white group-hover:text-black transition-colors duration-300 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-400 group-hover:font-semibold group-hover:text-zinc-900 leading-relaxed transition-colors duration-300">
                     {step.description}
                   </p>
                 </div>

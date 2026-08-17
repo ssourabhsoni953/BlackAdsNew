@@ -1,5 +1,5 @@
 import React from "react";
-import homeAsset from "../assets/home.png";
+import homeAsset from "../assets/home.svg";
 import {
   ShieldCheck,
   Medal,

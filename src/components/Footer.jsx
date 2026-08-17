@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "../assets/home-logo.png";
 import {
   MapPin,
@@ -80,9 +81,9 @@ export default function Footer({ onOpenContact }) {
           
           {/* Col 1: Brand & Sagar MP Roots (4 cols) */}
           <div className="lg:col-span-4 space-y-5 text-left">
-            <a href="#home" className="inline-block">
+            <Link to="/" className="inline-block">
               <img src={Logo} alt="BlackAds Logo" className="h-12 w-auto object-contain brightness-110" />
-            </a>
+            </Link>
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-sm">
               BlackAds is Sagar’s premier performance advertising, high-CTR video marketing, and bespoke website development agency scaling brands across India.
             </p>
@@ -100,9 +101,9 @@ export default function Footer({ onOpenContact }) {
               </div>
               <div className="flex items-center gap-2.5">
                 <PhoneCall size={18} className="text-amber-500 shrink-0" />
-                <button type="button" onClick={onOpenContact} className="hover:text-white transition-colors cursor-pointer text-left">
+                <a href="tel:+916260756736" className="hover:text-white transition-colors cursor-pointer text-left">
                   +91 (6260756736)
-                </button>
+                </a>
               </div>
             </div>
 
@@ -110,7 +111,9 @@ export default function Footer({ onOpenContact }) {
             <div className="flex items-center gap-2.5 pt-2 flex-wrap">
               {/* Instagram */}
               <a
-                href="#"
+                href="https://www.instagram.com/_black_ads"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-md hover:scale-110 hover:shadow-[0_0_15px_rgba(220,39,67,0.6)] active:scale-95 transition-all"
               >
@@ -119,7 +122,9 @@ export default function Footer({ onOpenContact }) {
 
               {/* LinkedIn */}
               <a
-                href="#"
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="w-10 h-10 rounded-xl bg-[#0A66C2] flex items-center justify-center text-white shadow-md hover:scale-110 hover:shadow-[0_0_15px_rgba(10,102,194,0.6)] active:scale-95 transition-all"
               >
@@ -128,7 +133,9 @@ export default function Footer({ onOpenContact }) {
 
               {/* YouTube */}
               <a
-                href="#"
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="YouTube"
                 className="w-10 h-10 rounded-xl bg-[#FF0000] flex items-center justify-center text-white shadow-md hover:scale-110 hover:shadow-[0_0_15px_rgba(255,0,0,0.6)] active:scale-95 transition-all"
               >
@@ -137,7 +144,9 @@ export default function Footer({ onOpenContact }) {
 
               {/* WhatsApp */}
               <a
-                href="#"
+                href="https://wa.me/916260756736"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="WhatsApp"
                 className="w-10 h-10 rounded-xl bg-[#25D366] flex items-center justify-center text-white shadow-md hover:scale-110 hover:shadow-[0_0_15px_rgba(37,211,102,0.6)] active:scale-95 transition-all"
               >
@@ -170,14 +179,14 @@ export default function Footer({ onOpenContact }) {
               <span>Core Services</span>
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Performance Meta & TikTok Ads</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Google Ads & High-Intent PPC</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Cinematic Video & UGC Creatives</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Custom High-Converting Web Dev</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">SEO & Organic Search Rankings</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Online Reputation & PR</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Influencer & Creator Scaling</a></li>
-              <li><a href="#services" className="hover:text-amber-400 transition-colors">Brand Identity & Strategy</a></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Performance Meta & TikTok Ads</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Google Ads & High-Intent PPC</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Cinematic Video & UGC Creatives</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Custom High-Converting Web Dev</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">SEO & Organic Search Rankings</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Online Reputation & PR</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Influencer & Creator Scaling</Link></li>
+              <li><Link to="/services" className="hover:text-amber-400 transition-colors">Brand Identity & Strategy</Link></li>
             </ul>
           </div>
 
@@ -256,6 +265,7 @@ export default function Footer({ onOpenContact }) {
           </div>
 
           <div className="flex items-center gap-6">
+            <Link to="/blogs" className="hover:text-amber-400 transition-colors font-medium">Sagar Growth Blog</Link>
             <a href="#" className="hover:text-zinc-200 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-zinc-200 transition-colors">Terms of Service</a>
             <button

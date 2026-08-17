@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { 
-  Target, 
-  Video, 
-  Layout, 
-  ShoppingBag, 
-  Search, 
-  BarChart3, 
-  CheckCircle2, 
+import {
+  Target,
+  Video,
+  Layout,
+  ShoppingBag,
+  Search,
+  BarChart3,
+  CheckCircle2,
   ArrowUpRight,
-  Sparkles 
+  Sparkles
 } from "lucide-react";
 
 export default function Services({ onOpenContact }) {
@@ -28,7 +28,7 @@ export default function Services({ onOpenContact }) {
         "Retargeting & LTV Funnel Strategy",
         "Daily Budget Optimization",
       ],
-      color: "from-blue-500 to-cyan-400",
+      color: "white",
     },
     {
       id: "ad-creatives",
@@ -43,7 +43,7 @@ export default function Services({ onOpenContact }) {
         "Motion Design & Graphic Banners",
         "Rapid Iteration & Creative Scaling",
       ],
-      color: "from-purple-500 to-indigo-400",
+      color: "white",
     },
     {
       id: "web-dev",
@@ -58,7 +58,7 @@ export default function Services({ onOpenContact }) {
         "Mobile-First Responsive Layouts",
         "Seamless CRM & Payment Integrations",
       ],
-      color: "from-emerald-500 to-teal-400",
+      color: "white",
     },
     {
       id: "ecommerce",
@@ -73,7 +73,7 @@ export default function Services({ onOpenContact }) {
         "Subscription & Repeat Purchase Optimization",
         "Inventory & Profit Margin Alignment",
       ],
-      color: "from-amber-500 to-orange-400",
+      color: "white",
     },
     {
       id: "seo",
@@ -88,7 +88,7 @@ export default function Services({ onOpenContact }) {
         "Authority Backlink Acquisition",
         "Content Strategy & Copywriting",
       ],
-      color: "from-pink-500 to-rose-400",
+      color: "white",
     },
     {
       id: "analytics",
@@ -103,24 +103,23 @@ export default function Services({ onOpenContact }) {
         "COGS & Profit Margin Tracking",
         "Weekly Strategy Alignment Calls",
       ],
-      color: "from-blue-600 to-purple-600",
+      color: "white",
     },
   ];
 
   return (
-    <section id="services" className="relative py-24 bg-slate-950/60 border-t border-white/5">
+    <section id="services" className="relative py-24 bg-black border-t border-white/5">
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/40 px-4 py-1 text-xs font-semibold text-purple-400 mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-zinc-900 px-4 py-1 text-xs font-semibold text-amber-400 mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Our Core Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Services Built For{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              Aggressive Growth
-            </span>
+            <span className="text-amber-500">Aggressive Growth</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-400">
             We don't offer vanity metrics. Every service we provide is hyper-focused on driving revenue, lowering CPA, and scaling your brand.
@@ -134,32 +133,32 @@ export default function Services({ onOpenContact }) {
             return (
               <div
                 key={service.id}
-                className="group relative rounded-2xl border border-white/10 bg-slate-900/60 p-8 backdrop-blur-xl hover:border-blue-500/40 hover:bg-slate-900/80 transition-all duration-300 flex flex-col justify-between"
+                className="group relative rounded-2xl border border-zinc-800 bg-[#0d0d10] p-8 hover:bg-white hover:border-white shadow-sm transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   {/* Service Icon with Gradient glow */}
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} p-0.5 shadow-lg shadow-blue-500/10 mb-6 group-hover:scale-110 transition-transform`}>
-                    <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                  <div className={`w-14 h-14 rounded-xl bg-${service.color} p-0.5 shadow-lg mb-6 group-hover:scale-110 transition-t ransform duration-300`}>
+                    <div className="w-full h-full bg-slate-950 group-hover:bg-black rounded-[10px] flex items-center justify-center transition-colors">
                       <Icon className="w-7 h-7 text-white" />
                     </div>
                   </div>
 
                   {/* Title & Tagline */}
-                  <h3 className="text-2xl font-bold text-white group-hover:text-blue-300 transition-colors">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-black transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <div className="text-xs font-medium text-blue-400 mt-1 mb-4">
+                  <div className="text-xs font-semibold text-white group-hover:text-amber-500 mt-1 mb-4 transition-colors duration-300">
                     {service.tagline}
                   </div>
-                  <p className="text-sm text-slate-300 leading-relaxed">
+                  <p className="text-sm text-zinc-400 group-hover:font-semibold group-hover:text-zinc-900 leading-relaxed transition-colors duration-300">
                     {service.description}
                   </p>
 
                   {/* Bullet points */}
                   <ul className="mt-6 space-y-2.5">
                     {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-slate-300">
-                        <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />
+                      <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-zinc-300 group-hover:text-zinc-900 transition-colors duration-300 font-medium">
+                        <CheckCircle2 className="w-4 h-4 text-white group-hover:text-amber-600 shrink-0 transition-colors duration-300" />
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -170,15 +169,17 @@ export default function Services({ onOpenContact }) {
                 <button
                   type="button"
                   onClick={onOpenContact}
-                  className="mt-8 flex items-center justify-between w-full pt-4 border-t border-white/10 text-xs font-semibold text-slate-300 group-hover:text-blue-400 transition-colors cursor-pointer"
+                  className="mt-8 flex items-center justify-between w-full pt-4 border-t border-zinc-800 group-hover:border-zinc-300 text-xs font-bold text-zinc-300 group-hover:text-black transition-colors cursor-pointer"
                 >
                   <span>Get Strategy Details</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </button>
               </div>
+              
             );
           })}
         </div>
+        
       </div>
     </section>
   );
