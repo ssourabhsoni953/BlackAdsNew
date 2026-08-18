@@ -412,7 +412,7 @@ export default function Hero({ onOpenContact }) {
               {/* Author Info */}
               <div className="pt-4 border-t border-zinc-800/80 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${rev.gradient} flex items-center justify-center text-xs font-bold text-white shadow-sm`}>
+                  <div className={`w-10 h-10 rounded-full bg-linear-to-br ${rev.gradient} flex items-center justify-center text-xs font-bold text-white shadow-sm`}>
                     {rev.initials}
                   </div>
                   <div>

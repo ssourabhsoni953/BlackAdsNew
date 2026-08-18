@@ -63,7 +63,7 @@ export default function Footer({ onOpenContact }) {
               <ArrowRight size={18} />
             </button>
             <a
-              href="https://wa.me/"
+              href="https://wa.me/916260756736"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/80 px-6 py-4 text-sm font-semibold text-white hover:bg-zinc-800 hover:border-zinc-500 transition-all cursor-pointer"

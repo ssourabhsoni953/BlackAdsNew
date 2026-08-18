@@ -7,6 +7,7 @@ import BlogsPage from "./pages/BlogsPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import ContactPage from "./pages/ContactPage";
 import ContactModal from "./components/ContactModal";
+import { handleCallAction } from "./utils/callHandler";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -21,15 +22,19 @@ function ScrollToTop() {
 function AppContent() {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
+  const handleCallClick = () => {
+    handleCallAction(() => setIsContactOpen(true));
+  };
+
   return (
     <div className="relative min-h-screen bg-slate-950 font-sans antialiased text-slate-100">
       <ScrollToTop />
-      <Navbar onOpenContact={() => setIsContactOpen(true)} />
+      <Navbar onOpenContact={handleCallClick} />
       <Routes>
-        <Route path="/" element={<Home onOpenContact={() => setIsContactOpen(true)} />} />
-        <Route path="/services" element={<ServicesPage onOpenContact={() => setIsContactOpen(true)} />} />
-        <Route path="/blogs" element={<BlogsPage onOpenContact={() => setIsContactOpen(true)} />} />
-        <Route path="/blogs/:slug" element={<BlogPostPage onOpenContact={() => setIsContactOpen(true)} />} />
+        <Route path="/" element={<Home onOpenContact={handleCallClick} />} />
+        <Route path="/services" element={<ServicesPage onOpenContact={handleCallClick} />} />
+        <Route path="/blogs" element={<BlogsPage onOpenContact={handleCallClick} />} />
+        <Route path="/blogs/:slug" element={<BlogPostPage onOpenContact={handleCallClick} />} />
         <Route path="/contact" element={<ContactPage />} />
       </Routes>
       <ContactModal

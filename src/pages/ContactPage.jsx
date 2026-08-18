@@ -4,7 +4,6 @@ import {
   MapPin,
   EnvelopeSimple,
   PhoneCall,
-  PaperPlaneTilt,
   InstagramLogo,
   LinkedinLogo,
   YoutubeLogo,
@@ -16,45 +15,29 @@ import {
   ArrowRight,
   Clock,
   ShieldCheck,
-  ChatsCircle
+  ChatsCircle,
+  Copy,
+  Check,
+  CalendarCheck,
+  Lightning,
 } from "@phosphor-icons/react";
+import {
+  PHONE_NUMBER,
+  PHONE_NUMBER_RAW,
+  WHATSAPP_LINK,
+  EMAIL_ADDRESS,
+  handleCallAction,
+} from "../utils/callHandler";
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    website: "",
-    budget: "₹25,000 - ₹1,00,000 / mo",
-    services: [],
-    message: "",
-  });
+  const [copied, setCopied] = useState(false);
 
-  const availableServices = [
-    "Performance Meta & TikTok Ads",
-    "Google Ads & PPC Search",
-    "Cinematic Video & UGC Production",
-    "Custom Website Design & Dev",
-    "SEO & Google E-E-A-T Ranking",
-    "Brand Identity & Social Media",
-  ];
-
-  const handleServiceToggle = (serviceName) => {
-    setFormData((prev) => {
-      const exists = prev.services.includes(serviceName);
-      return {
-        ...prev,
-        services: exists
-          ? prev.services.filter((s) => s !== serviceName)
-          : [...prev.services, serviceName],
-      };
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
+  const handleCopyNumber = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(PHONE_NUMBER);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
   };
 
   const socialLinks = [
@@ -68,8 +51,8 @@ export default function ContactPage() {
     },
     {
       name: "WhatsApp",
-      handle: "+91 6260756736",
-      href: "https://wa.me/916260756736",
+      handle: "+91 62607 56736",
+      href: WHATSAPP_LINK,
       icon: WhatsappLogo,
       color: "from-[#25D366] to-[#128C7E]",
       btnText: "Chat On WhatsApp",
@@ -126,7 +109,7 @@ export default function ContactPage() {
         </h1>
 
         <p className="mt-6 text-base sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed font-normal">
-          Whether you want to scale profitable Meta & Google ad campaigns, build a conversion-focused website, or dominate local search in Sagar — our team is here to help.
+          Skip lengthy forms and speak directly with our core strategy team. Whether you want to scale profitable Meta & Google ad campaigns, build a conversion-focused website, or dominate local search in Sagar — we’re just a call or message away.
         </p>
       </section>
 
@@ -141,11 +124,11 @@ export default function ContactPage() {
               </div>
               <h3 className="text-lg font-bold text-white mb-1">Direct Call</h3>
               <p className="text-xs text-zinc-400 mb-3">Speak with our senior media strategist.</p>
-              <div className="text-sm font-bold text-white">+91 6260756736</div>
+              <div className="text-sm font-bold text-white">{PHONE_NUMBER}</div>
             </div>
             <a
-              href="tel:+916260756736"
-              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors"
+              href={`tel:${PHONE_NUMBER_RAW}`}
+              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
             >
               <span>Call Us Now</span>
               <ArrowRight size={14} />
@@ -160,13 +143,13 @@ export default function ContactPage() {
               </div>
               <h3 className="text-lg font-bold text-white mb-1">WhatsApp Chat</h3>
               <p className="text-xs text-zinc-400 mb-3">Instant consultation & campaign audits.</p>
-              <div className="text-sm font-bold text-white">+91 6260756736</div>
+              <div className="text-sm font-bold text-white">{PHONE_NUMBER}</div>
             </div>
             <a
-              href="https://wa.me/916260756736"
+              href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-[#25D366] hover:text-emerald-400 transition-colors"
+              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-[#25D366] hover:text-emerald-400 transition-colors cursor-pointer"
             >
               <span>Chat On WhatsApp</span>
               <ArrowRight size={14} />
@@ -181,11 +164,11 @@ export default function ContactPage() {
               </div>
               <h3 className="text-lg font-bold text-white mb-1">Official Email</h3>
               <p className="text-xs text-zinc-400 mb-3">Send project briefs & proposals.</p>
-              <div className="text-sm font-bold text-white break-all">contact@blackads.agency</div>
+              <div className="text-sm font-bold text-white break-all">{EMAIL_ADDRESS}</div>
             </div>
             <a
-              href="mailto:contact@blackads.agency"
-              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors"
+              href={`mailto:${EMAIL_ADDRESS}`}
+              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
             >
               <span>Send An Email</span>
               <ArrowRight size={14} />
@@ -206,7 +189,7 @@ export default function ContactPage() {
               href="https://maps.google.com/?q=Civil+Lines+Sagar+Madhya+Pradesh"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors"
+              className="mt-6 inline-flex items-center justify-between w-full pt-4 border-t border-zinc-800 text-xs font-bold text-purple-400 hover:text-purple-300 transition-colors cursor-pointer"
             >
               <span>Get Directions</span>
               <ArrowRight size={14} />
@@ -215,166 +198,117 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Main Two-Column Layout: Form + Social & Guarantee */}
+      {/* Main Two-Column Layout: Direct Strategy Consultation & Social Hub */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           
-          {/* Left Column: Interactive Form (7 Cols) */}
-          <div className="lg:col-span-7">
-            <div className="rounded-3xl border border-zinc-800 bg-[#0c0c10] p-6 sm:p-10 shadow-2xl relative">
+          {/* Left Column: Direct Call & Strategy Connect Hub (7 Cols) */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="rounded-3xl border border-zinc-800 bg-[#0c0c10] p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+              {/* Background ambient light */}
+              <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+
               <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-zinc-900 px-3.5 py-1 text-xs font-semibold text-amber-400 mb-4">
                 <Sparkle size={14} className="text-amber-400" />
-                <span>30-Minute Growth Audit & Proposal</span>
+                <span>Zero Forms &bull; Instant Direct Access</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Tell Us About Your Goals
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                Talk Directly With Our <br className="hidden sm:inline" />
+                <span className="text-amber-500">Growth Strategists</span>
               </h2>
-              <p className="mt-1.5 text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Fill out the quick form below and our strategy team in Sagar will review your brand and prepare a customized plan within 24 hours.
+              <p className="mt-3 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                We believe in fast communication without bureaucratic hurdles. Call or message us directly to discuss your ad campaigns, website development, or revenue growth roadmap.
               </p>
 
-              {submitted ? (
-                <div className="my-10 p-8 rounded-2xl bg-zinc-900 border border-emerald-500/40 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto shadow-lg">
-                    <CheckCircle size={36} weight="fill" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">Proposal Request Received!</h3>
-                  <p className="text-sm text-zinc-300 max-w-md mx-auto leading-relaxed">
-                    Thank you! Our senior strategist will review your requirements and reach out to you via WhatsApp / Call within 24 hours.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setSubmitted(false)}
-                    className="mt-4 px-6 py-2.5 rounded-xl bg-white text-xs font-bold text-black hover:bg-zinc-200 transition-all cursor-pointer shadow-md"
-                  >
-                    Submit Another Inquiry
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        Your Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Rahul Soni"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full rounded-xl border border-zinc-800 bg-[#121216] px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none transition-colors"
-                      />
+              {/* Main Phone Call Highlight Box */}
+              <div className="mt-8 rounded-2xl border border-zinc-800 bg-[#121217] p-6 sm:p-8 space-y-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center text-white shadow-lg shrink-0">
+                      <PhoneCall size={28} weight="fill" />
                     </div>
-
                     <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        Phone / WhatsApp Number *
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="+91 98765 43210"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full rounded-xl border border-zinc-800 bg-[#121216] px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none transition-colors"
-                      />
+                      <span className="text-xs uppercase font-bold tracking-wider text-amber-400">
+                        Official Direct Phone Line
+                      </span>
+                      <div className="text-2xl sm:text-3xl font-black text-white tracking-wide mt-0.5 select-all">
+                        {PHONE_NUMBER}
+                      </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="rahul@business.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full rounded-xl border border-zinc-800 bg-[#121216] px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none transition-colors"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        Business Website / Instagram Handle
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="https://yourbrand.com or @handle"
-                        value={formData.website}
-                        onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                        className="w-full rounded-xl border border-zinc-800 bg-[#121216] px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                      Estimated Monthly Marketing Budget
-                    </label>
-                    <select
-                      value={formData.budget}
-                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full rounded-xl border border-zinc-800 bg-[#121216] px-4 py-3 text-sm text-white focus:border-amber-500 focus:outline-none transition-colors cursor-pointer"
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <button
+                      type="button"
+                      onClick={handleCopyNumber}
+                      className={`w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-bold transition-all cursor-pointer ${
+                        copied
+                          ? "bg-emerald-500/20 border-emerald-500/60 text-emerald-300"
+                          : "bg-zinc-800/90 border-zinc-700 text-zinc-200 hover:bg-zinc-700 hover:text-white"
+                      }`}
                     >
-                      <option value="₹15,000 - ₹30,000 / mo">₹15,000 - ₹30,000 / mo (Starter Local Growth)</option>
-                      <option value="₹30,000 - ₹75,000 / mo">₹30,000 - ₹75,000 / mo (Active Ad Scaling)</option>
-                      <option value="₹75,000 - ₹2,00,000 / mo">₹75,000 - ₹2,00,000 / mo (Aggressive Growth)</option>
-                      <option value="₹2,00,000+ / mo">₹2,00,000+ / mo (Enterprise / Multi-City)</option>
-                    </select>
+                      {copied ? (
+                        <>
+                          <Check size={16} weight="bold" className="text-emerald-400" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy size={16} weight="bold" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
                   </div>
+                </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-zinc-300 mb-2">
-                      Services You're Interested In
-                    </label>
-                    <div className="flex flex-wrap gap-2">
-                      {availableServices.map((srv) => {
-                        const selected = formData.services.includes(srv);
-                        return (
-                          <button
-                            type="button"
-                            key={srv}
-                            onClick={() => handleServiceToggle(srv)}
-                            className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                              selected
-                                ? "bg-amber-500 border-amber-500 text-black shadow-md font-bold"
-                                : "bg-[#121216] border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700"
-                            }`}
-                          >
-                            {srv}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                      Tell Us About Your Project & Target Goals
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="Share your current challenges, target monthly revenue, or what you want to achieve..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full rounded-xl border border-zinc-800 bg-[#121216] px-4 py-3 text-sm text-white placeholder-zinc-500 focus:border-amber-500 focus:outline-none transition-colors resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full flex items-center justify-center gap-2.5 rounded-xl bg-white hover:bg-zinc-200 py-3.5 text-sm font-bold text-black shadow-xl hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-all cursor-pointer active:scale-98"
+                {/* Direct Action CTAs */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                  <a
+                    href={`tel:${PHONE_NUMBER_RAW}`}
+                    className="flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-red-600 to-red-700 py-3.5 text-sm font-bold text-white shadow-lg hover:from-red-500 hover:to-red-600 active:scale-95 transition-all cursor-pointer"
                   >
-                    <PaperPlaneTilt size={18} weight="bold" />
-                    <span>Submit Strategy Request</span>
-                  </button>
-                </form>
-              )}
+                    <PhoneCall size={18} weight="bold" />
+                    <span>Call Now ({PHONE_NUMBER})</span>
+                  </a>
+
+                  <a
+                    href={WHATSAPP_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2.5 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] py-3.5 text-sm font-bold text-black shadow-lg active:scale-95 transition-all cursor-pointer"
+                  >
+                    <WhatsappLogo size={20} weight="fill" />
+                    <span>WhatsApp Strategy Chat</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* What Happens On The Call */}
+              <div className="mt-8 space-y-3 pt-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
+                  What You Get When You Reach Out:
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80">
+                    <CalendarCheck size={20} className="text-amber-400 mb-2" />
+                    <div className="text-xs font-bold text-white mb-1">Free 30-Min Audit</div>
+                    <p className="text-[11px] text-zinc-400">We analyze your ad creatives, website, and funnel.</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80">
+                    <Lightning size={20} className="text-amber-400 mb-2" />
+                    <div className="text-xs font-bold text-white mb-1">Zero Lock-In</div>
+                    <p className="text-[11px] text-zinc-400">No pushy sales reps. 100% transparent advice.</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80">
+                    <Clock size={20} className="text-amber-400 mb-2" />
+                    <div className="text-xs font-bold text-white mb-1">Rapid Response</div>
+                    <p className="text-[11px] text-zinc-400">Direct response from our Sagar strategy team.</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -399,7 +333,7 @@ export default function ContactPage() {
                 href="https://www.instagram.com/_black_ads"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[#833ab4]/20 via-[#fd1d1d]/20 to-[#fcb045]/20 border border-pink-500/30 hover:border-pink-500/60 transition-all shadow-md"
+                className="group flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-[#833ab4]/20 via-[#fd1d1d]/20 to-[#fcb045]/20 border border-pink-500/30 hover:border-pink-500/60 transition-all shadow-md cursor-pointer"
               >
                 <div className="flex items-center gap-3.5">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform">
@@ -432,7 +366,7 @@ export default function ContactPage() {
                         href={soc.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/80 transition-all text-xs font-semibold text-zinc-300 hover:text-white"
+                        className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/80 transition-all text-xs font-semibold text-zinc-300 hover:text-white cursor-pointer"
                       >
                         <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${soc.color} flex items-center justify-center text-white shrink-0`}>
                           <Icon size={16} weight="bold" />
@@ -473,7 +407,7 @@ export default function ContactPage() {
       </section>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenContact={() => handleCallAction()} />
     </main>
   );
 }

@@ -1,179 +1,182 @@
-import React, { useState } from "react";
-import { X, PaperPlaneTilt, CheckCircle } from "@phosphor-icons/react";
+import React, { useState, useEffect } from "react";
+import {
+  X,
+  PhoneCall,
+  WhatsappLogo,
+  Copy,
+  Check,
+  EnvelopeSimple,
+  Clock,
+  MapPin,
+  Sparkle,
+} from "@phosphor-icons/react";
+import {
+  PHONE_NUMBER,
+  PHONE_NUMBER_RAW,
+  WHATSAPP_LINK,
+  EMAIL_ADDRESS,
+} from "../utils/callHandler";
 
 export default function ContactModal({ isOpen, onClose }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    website: "",
-    budget: "$5,000 - $15,000 / mo",
-    services: [],
-    message: "",
-  });
+  const [copied, setCopied] = useState(false);
+
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
-  const handleServiceToggle = (serviceName) => {
-    setFormData((prev) => {
-      const exists = prev.services.includes(serviceName);
-      return {
-        ...prev,
-        services: exists
-          ? prev.services.filter((s) => s !== serviceName)
-          : [...prev.services, serviceName],
-      };
-    });
+  const handleCopyNumber = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(PHONE_NUMBER);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-2xl rounded-2xl border border-zinc-800 bg-[#0c0c0e] p-6 sm:p-10 shadow-2xl text-white my-8">
-        
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md transition-opacity duration-200 animate-fadeIn"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-lg rounded-3xl border border-zinc-800 bg-[#0c0c10] p-6 sm:p-8 shadow-2xl text-white my-8 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Ambient Top Glow */}
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-gradient-to-b from-amber-500/20 via-red-500/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 text-zinc-400 hover:text-white p-2 rounded-lg bg-zinc-900 border border-zinc-800 transition-colors cursor-pointer hover:border-zinc-700"
+          className="absolute top-5 right-5 text-zinc-400 hover:text-white p-2 rounded-xl bg-zinc-900/80 border border-zinc-800 transition-colors cursor-pointer hover:border-zinc-700 active:scale-95"
+          aria-label="Close modal"
         >
-          <X size={20} />
+          <X size={18} />
         </button>
 
-        {submitted ? (
-          <div className="text-center py-10 space-y-4">
-            <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center mx-auto shadow-md">
-              <CheckCircle size={36} weight="fill" />
+        {/* Badge & Title */}
+        <div className="relative">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-zinc-900/90 px-3.5 py-1 text-xs font-semibold text-amber-400 mb-3 shadow-sm">
+            <Sparkle size={14} className="text-amber-400" />
+            <span>BlackAds Direct Line</span>
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Connect With Our Strategists
+          </h3>
+          <p className="mt-1 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+            Speak directly with our senior media buyers and growth directors.
+          </p>
+        </div>
+
+        {/* Prominent Phone Box Card */}
+        <div className="mt-6 rounded-2xl border border-zinc-800/90 bg-gradient-to-b from-zinc-900/90 to-[#121217] p-5 sm:p-6 text-center space-y-4 shadow-inner">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center text-white mx-auto shadow-[0_0_20px_rgba(239,68,68,0.35)]">
+            <PhoneCall size={26} weight="fill" />
+          </div>
+
+          <div>
+            <span className="text-xs uppercase font-bold tracking-wider text-zinc-400">
+              Official Contact Number
+            </span>
+            <div className="text-2xl sm:text-3xl font-black text-white tracking-wide mt-1 select-all">
+              {PHONE_NUMBER}
             </div>
-            <h3 className="text-2xl font-bold text-white">Strategy Call Requested!</h3>
-            <p className="text-sm text-zinc-400 max-w-md mx-auto">
-              Thank you for reaching out to BlackAds. Our senior strategist will contact you within 24 hours.
-            </p>
+          </div>
+
+          {/* Action Buttons: Call Now & Copy */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <a
+              href={`tel:${PHONE_NUMBER_RAW}`}
+              className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-700 px-4 py-3 text-sm font-bold text-white shadow-lg hover:from-red-500 hover:to-red-600 active:scale-95 transition-all cursor-pointer"
+            >
+              <PhoneCall size={18} weight="bold" />
+              <span>Call Direct</span>
+            </a>
+
             <button
               type="button"
-              onClick={() => {
-                setSubmitted(false);
-                onClose();
-              }}
-              className="mt-4 px-6 py-2.5 rounded-lg bg-white text-sm font-bold text-black hover:bg-zinc-200 transition-all cursor-pointer shadow-md"
+              onClick={handleCopyNumber}
+              className={`flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold transition-all cursor-pointer active:scale-95 ${
+                copied
+                  ? "bg-emerald-500/20 border-emerald-500/60 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                  : "bg-zinc-800/80 border-zinc-700 text-white hover:bg-zinc-700/80 hover:border-zinc-600"
+              }`}
             >
-              Close Window
+              {copied ? (
+                <>
+                  <Check size={18} weight="bold" className="text-emerald-400" />
+                  <span>Number Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={18} weight="bold" />
+                  <span>Copy Number</span>
+                </>
+              )}
             </button>
           </div>
-        ) : (
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900 px-3 py-1 text-xs font-semibold text-zinc-300 mb-3">
-              <span>Book Your Growth Strategy Audit</span>
+        </div>
+
+        {/* Secondary Direct Channels (WhatsApp & Email) */}
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* WhatsApp Direct */}
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 p-3.5 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 hover:border-emerald-500/50 hover:bg-[#25D366]/10 transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-[#25D366]/20 border border-[#25D366]/30 flex items-center justify-center text-[#25D366] group-hover:bg-[#25D366] group-hover:text-white transition-colors">
+              <WhatsappLogo size={22} weight="fill" />
             </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Let's Scale Your Revenue.
-            </h3>
-            <p className="mt-1.5 text-xs sm:text-sm text-zinc-400">
-              Fill out the details below and we'll prepare a custom ad growth proposal for your brand.
-            </p>
-
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-zinc-300 mb-1">Your Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Alex Morgan"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full rounded-lg border border-zinc-800 bg-[#141417] px-4 py-2 text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-zinc-300 mb-1">Work Email *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="alex@yourbrand.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full rounded-lg border border-zinc-800 bg-[#141417] px-4 py-2 text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none"
-                  />
-                </div>
+            <div className="text-left">
+              <div className="text-xs font-bold text-white group-hover:text-[#25D366] transition-colors">
+                Chat on WhatsApp
               </div>
+              <div className="text-[11px] text-zinc-400">Instant consultation</div>
+            </div>
+          </a>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-zinc-300 mb-1">Brand Website *</label>
-                  <input
-                    type="url"
-                    required
-                    placeholder="https://yourbrand.com"
-                    value={formData.website}
-                    onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                    className="w-full rounded-lg border border-zinc-800 bg-[#141417] px-4 py-2 text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-zinc-300 mb-1">Monthly Ad Budget</label>
-                  <select
-                    value={formData.budget}
-                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full rounded-lg border border-zinc-800 bg-[#141417] px-4 py-2 text-sm text-white focus:border-white focus:outline-none"
-                  >
-                    <option value="$2,000 - $5,000 / mo">$2,000 - $5,000 / mo</option>
-                    <option value="$5,000 - $15,000 / mo">$5,000 - $15,000 / mo</option>
-                    <option value="$15,000 - $50,000 / mo">$15,000 - $50,000 / mo</option>
-                    <option value="$50,000+ / mo">$50,000+ / mo</option>
-                  </select>
-                </div>
+          {/* Email Direct */}
+          <a
+            href={`mailto:${EMAIL_ADDRESS}`}
+            className="flex items-center gap-3 p-3.5 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all group"
+          >
+            <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+              <EnvelopeSimple size={22} weight="bold" />
+            </div>
+            <div className="text-left truncate">
+              <div className="text-xs font-bold text-white group-hover:text-blue-300 transition-colors">
+                Email Our Team
               </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-zinc-300 mb-2">Services Interested In</label>
-                <div className="flex flex-wrap gap-2">
-                  {["Performance Paid Ads", "Google Ads", "Website Design & Dev", "SEO & Optimization"].map((srv) => {
-                    const selected = formData.services.includes(srv);
-                    return (
-                      <button
-                        type="button"
-                        key={srv}
-                        onClick={() => handleServiceToggle(srv)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                          selected
-                            ? "bg-white border-white text-black"
-                            : "bg-[#141417] border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700"
-                        }`}
-                      >
-                        {srv}
-                      </button>
-                    );
-                  })}
-                </div>
+              <div className="text-[11px] text-zinc-400 truncate">
+                contact@blackads.agency
               </div>
+            </div>
+          </a>
+        </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-zinc-300 mb-1">Tell Us About Your Goals</label>
-                <textarea
-                  rows={3}
-                  placeholder="Share your current ad challenges or target revenue goals..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full rounded-lg border border-zinc-800 bg-[#141417] px-4 py-2 text-sm text-white placeholder-zinc-500 focus:border-white focus:outline-none resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2 rounded-lg bg-white py-3 text-sm font-bold text-black shadow-md hover:bg-zinc-200 transition-all cursor-pointer mt-3"
-              >
-                <PaperPlaneTilt size={18} />
-                <span>Submit Strategy Request</span>
-              </button>
-            </form>
+        {/* Footer Meta Note */}
+        <div className="mt-5 pt-4 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-400 gap-2">
+          <div className="flex items-center gap-1.5">
+            <Clock size={14} className="text-amber-400" />
+            <span>Mon - Sat &bull; 9:00 AM - 8:00 PM IST</span>
           </div>
-        )}
-
+          <div className="flex items-center gap-1.5 text-zinc-500">
+            <MapPin size={14} className="text-amber-500" />
+            <span>Civil Lines, Sagar (M.P.)</span>
+          </div>
+        </div>
       </div>
     </div>
   );
